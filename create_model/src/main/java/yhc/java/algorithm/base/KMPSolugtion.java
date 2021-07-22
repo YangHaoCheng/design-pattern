@@ -5,10 +5,6 @@ public class KMPSolugtion {
     public static void main(String[] args) {
         String source = "abcbbcbcda";
         String target = "bcbc";
-//        int[] next = getNext(str.toCharArray(), str.length());
-//        for (int i : next) {
-//            System.out.print(i + " ");
-//        }
 
         int index = findStr(source, target);
         System.out.println(index);
