@@ -1,5 +1,7 @@
 package yhc.java.design.pattern.single;
 
+import yhc.java.design.pattern.Test;
+
 /**
  * 嵌套类单例
  */
@@ -13,4 +15,14 @@ public class Singleton {
     public static Singleton getInstance() {
         return Holder.instance;
     }
+}
+
+class TestSingle {
+    private TestSingle(){}
+
+    private static class Holder{
+        private static TestSingle instance = new TestSingle();
+    }
+
+    public static TestSingle getInstance(){ return Holder.instance; }
 }

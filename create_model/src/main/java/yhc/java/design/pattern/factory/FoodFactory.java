@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class FoodFactory {
+public class FoodFactory implements Factory {
 
     public static void main(String[] args) throws ParseException {
 
@@ -14,5 +14,15 @@ public class FoodFactory {
         Date d = sdf.parse(date);
         sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(sdf.format(d));
+    }
+
+    @Override
+    public void create() {
+
+    }
+
+    @Override
+    public void create(String prouducer) {
+
     }
 }
