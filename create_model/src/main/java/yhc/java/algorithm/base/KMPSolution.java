@@ -1,6 +1,6 @@
 package yhc.java.algorithm.base;
 
-public class KMPSolugtion {
+public class KMPSolution {
 
     public static void main(String[] args) {
         String source = "abcbbcbcda";
