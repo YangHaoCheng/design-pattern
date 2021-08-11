@@ -6,9 +6,8 @@ import java.util.Arrays;
 
 public class ReversStr {
     public static void main(String[] args) {
-        String a = "10202044030615074357";
+        String a = "10201044030615008191";
         String s = reverse(a);
-        System.out.println(a);
         System.out.println(s);
     }
 

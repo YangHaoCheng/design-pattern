@@ -3,8 +3,8 @@ package yhc.java.algorithm.base;
 public class KMPSolution {
 
     public static void main(String[] args) {
-        String source = "abcbbcbcda";
-        String target = "bcbc";
+        String source = "abcbbcbbbcda";
+        String target = "bbb";
 
         int index = findStr(source, target);
         System.out.println(index);
