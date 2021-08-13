@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 查找第一个不重复的字母
  * s = "leetcode"
  * 返回 0.
  *
