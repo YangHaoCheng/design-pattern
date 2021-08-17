@@ -3,7 +3,7 @@ package yhc.java.algorithm.base;
 public class QuickSort {
 
     public static void main(String[] args) {
-        int[] source = {2,1,4,6,7,10,0,8,9};
+        int[] source = {4,2,1,5};
         int[] sort = sortArray(source);
         for (int i : sort) {
             System.out.print(i + " ");
