@@ -10,17 +10,13 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Auther: ZHUANGHAOTANG
- * @Date: 2018/11/6 11:49
- * @Description:
- */
+
 public class HDFSUtils {
 
     /**
      * HDFS NamenNode URL
      */
-    private static final String NAMENODE_URL = "hdfs://mycluster:8020";
+    private static final String NAMENODE_URL = "hdfs://emr-cluster:8020";
 
     /**
      * 配置项
@@ -28,18 +24,29 @@ public class HDFSUtils {
     private static Configuration conf = null;
 
     static {
+        System.setProperty("HADOOP_USER_NAME", "hadoop");
         conf = new Configuration();
         //指定默认连接的NameNode,使用NameService的名称
-        conf.set("fs.defaultFS", "hdfs://mycluster");
+        conf.set("fs.defaultFS", "hdfs://emr-cluster");
         //指定NameService的名称
-        conf.set("dfs.nameservices", "mycluster");
+        conf.set("dfs.nameservices", "emr-cluster");
         //指定NameService下的NameNode列表
-        conf.set("dfs.ha.namenodes.mycluster", "nn1,nn2");
+        conf.set("dfs.ha.namenodes.emr-cluster", "nn1,nn2");
         //分别指定NameNode的RPC通讯地址
-        conf.set("dfs.namenode.rpc-address.mycluster.nn1", "hadoop1:8020");
-        conf.set("dfs.namenode.rpc-address.mycluster.nn2", "hadoop2:8020");
+        conf.set("dfs.namenode.rpc-address.emr-cluster.nn1", "172.18.224.143:8020");
+        conf.set("dfs.namenode.rpc-address.emr-cluster.nn2", "172.18.224.144:8020");
         //配置NameNode失败自动切换的方式
-        conf.set("dfs.client.failover.proxy.provider.mycluster", "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider");
+        conf.set("dfs.client.failover.proxy.provider.emr-cluster", "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider");
+        //配置组内通讯使用域名
+        conf.set("dfs.client.use.datanode.hostname","true");
+    }
+
+    public static void main(String[] args) {
+        try{
+            uploadLocalFileToHDFS("E:\\Download\\Chrome\\0000.csv","/user/hive/warehouse/financial.db/ods_financial_wxorderrecord_tmp/date_day_p=2021-07-07/partner_no=1412602402");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**

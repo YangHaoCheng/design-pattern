@@ -1,4 +1,4 @@
-package yhc.java.algorithm.base;
+package yhc.java.algorithm.base.mytry;
 
 public class MyQuickSort {
     public static void main(String[] args) {
