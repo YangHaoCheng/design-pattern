@@ -1,6 +1,6 @@
 package yhc.java.design.pattern.factory;
 
 interface Factory {
-    public void create();
-    public void create(String prouducer);
+    public String create();
+    public String create(String prouducer);
 }

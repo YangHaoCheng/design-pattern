@@ -19,10 +19,20 @@ public class Singleton {
 
 class TestSingle {
     private TestSingle(){}
+    private String name;
+    private String gender;
 
     private static class Holder{
         private static TestSingle instance = new TestSingle();
+
+
     }
 
     public static TestSingle getInstance(){ return Holder.instance; }
+
+    public static void main(String[] args) {
+
+
+
+    }
 }
