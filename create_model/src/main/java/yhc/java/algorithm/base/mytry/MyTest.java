@@ -16,10 +16,14 @@ public class MyTest {
         String pattern = "YYYY-MM-dd'T'HH:mm:ssZZ";
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         DateTimeFormatter parser2 = ISODateTimeFormat.dateTimeNoMillis();
+
+        String b="wqe\nasd";
+        String s = b.toString().replaceAll("\\n", " ");
+        System.out.println(s);
 //        String format = df.format("2018-07-18T19:28:13Z");
 //
 //        df.setTimeZone(TimeZone.getTimeZone("UAT"));
 //        long parse = Date.parse("2018-07-18T19:28:13Z");
-        System.out.println(parser2.parseDateTime("2018-07-18T19:28:13Z"));
+//        System.out.println(parser2.parseDateTime("2018-07-18T19:28:13Z"));
     }
 }
