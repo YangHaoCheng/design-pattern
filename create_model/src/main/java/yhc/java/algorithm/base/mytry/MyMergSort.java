@@ -2,8 +2,9 @@ package yhc.java.algorithm.base.mytry;
 
 public class MyMergSort {
     public static void main(String[] args) {
-        int[] p = {1,5,3,2,4};
+        int[] p = {1,5,8,2,4,6,7,9,3};
         int[] ints = sortArray(p);
+        System.out.println("++++++++++++++++++++++++++++");
         for (int anInt : ints) {
             System.out.print(anInt + " ");
         }
@@ -16,6 +17,10 @@ public class MyMergSort {
         while (k < len) {
             mergePass(nums,k,len);
             k *= 2;
+            System.out.println("----------"+ k +"--------- \n");
+            for (int num : nums) {
+                System.out.print(num+" ");
+            }
         }
         return nums;
 
@@ -25,6 +30,9 @@ public class MyMergSort {
 
         int i;
         for (i = 0; i < len-2*k; i += 2*k) {
+            int right = i;
+            int mid = i+k-1;
+            int left = i+2*k-1;
             //归并
             merge(array,i,i+k-1,i+2*k-1);
         }
@@ -49,9 +57,24 @@ public class MyMergSort {
             }
         }
         //对应第三步，将某一小集合的剩余元素存到大集合中
-        if (temp1 <= mid) System.arraycopy(arr, temp1, temparr, index, mid - temp1 + 1);
-        if (temp2 <= right) System.arraycopy(arr, temp2, temparr, index, right -temp2 + 1);
+        if (temp1 <= mid){
+
+            System.arraycopy(arr, temp1, temparr, index, mid - temp1 + 1);
+        }
+        if (temp2 <= right) {
+
+            System.arraycopy(arr, temp2, temparr, index, right -temp2 + 1);
+        }
+
+        System.out.print("temparr : \n");
+        for (int i : temparr) {
+            System.out.print(i + " ");
+        }
         //将大集合的元素复制回原数组
         System.arraycopy(temparr,0,arr,0+left,right-left+1);
+        System.out.print("arr : \n");
+        for (int i : temparr) {
+            System.out.print(i + " ");
+        }
     }
 }
