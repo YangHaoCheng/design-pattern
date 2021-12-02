@@ -6,9 +6,10 @@ import java.util.Arrays;
 
 public class ReversStr {
     public static void main(String[] args) {
-        String a = "10101244030015705470";
-        String s = reverse(a);
-        System.out.println(s);
+        String a = "刘刚\n";
+        String replace = a.replace("\n", "asdasda");
+        System.out.println(a);
+        System.out.println(replace);
     }
 
     public static String reverse1(String str) {
