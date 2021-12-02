@@ -1,7 +1,5 @@
 package yhc.java.design.pattern.single;
 
-import yhc.java.design.pattern.Test;
-
 /**
  * 嵌套类单例
  */
