@@ -1,6 +1,7 @@
 package yhc.java.random.data.bean;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.Map;
 
 public class Student {
     private int id;
@@ -8,13 +9,13 @@ public class Student {
     private Date BirthDay;
     private int grade;
     private int classId;
-    private int score=0;
+    private Map<String,Integer> score;
 
     private Student() {
 
     }
 
-    private Student(int id, String name, Date birthDay, int grade, int classId) {
+    public Student(int id, String name, Date birthDay, int grade, int classId) {
         this.id = id;
         this.name = name;
         BirthDay = birthDay;
@@ -38,7 +39,7 @@ public class Student {
         this.name = name;
     }
 
-    public Date getBirthDay() {
+    public java.sql.Date getBirthDay() {
         return BirthDay;
     }
 
@@ -62,11 +63,11 @@ public class Student {
         this.classId = classId;
     }
 
-    public int getScore() {
+    public Map<String,Integer> getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Map<String,Integer> score) {
         this.score = score;
     }
 
