@@ -1,5 +1,6 @@
 package yhc.java.random.data.enums;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ import java.util.Random;
 public class CourseEnums {
     private String[] courses = {"Chinese", "English", "Math", "Physics", "Chemistry"};
     private int score;
-    private Map<String,Integer> courseScore;
+    private Map<String,Integer> courseScore = new HashMap<>();
 
     public String getCourse(int index) {
         return courses[index];

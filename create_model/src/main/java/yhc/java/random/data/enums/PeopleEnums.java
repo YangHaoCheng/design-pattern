@@ -102,15 +102,15 @@ public class PeopleEnums {
     }
 
     public int getGrade() {
-        int randomGrade = this.age - 12;
+        int randomGrade = this.age - 11;
         setGrade(randomGrade);
         return randomGrade;
     }
 
     public Date getBirthDay() {
-        Date dateTime = DateUtil.offset(this.birthDay, DateField.DAY_OF_YEAR, this.age - 12);
-        java.sql.Date date = java.sql.Date.valueOf(dateTime.toString());
-        return date;
+        Date dateTime = DateUtil.offset(this.birthDay, DateField.YEAR, -getAge());
+        java.sql.Date sqlDate = new java.sql.Date(dateTime.getTime());
+        return sqlDate;
     }
 
     public void setBirthDay(Date birthDay) {
