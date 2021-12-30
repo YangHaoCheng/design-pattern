@@ -54,6 +54,8 @@ public class PeopleEnums {
             ,"Daniel"
             ,"Benjamin"
             ,"Owen"
+            ,"Messi"
+            ,"Would"
     };
 
     private static String[] FemaleNameEnum = {"Emily"
@@ -86,6 +88,8 @@ public class PeopleEnums {
             ,"Haley"
             ,"Julia"
             ,"Kaitlyn"
+            ,"Jena"
+            ,"Angle"
     };
 
     public String getName() {

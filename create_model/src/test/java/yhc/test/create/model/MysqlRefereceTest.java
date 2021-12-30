@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import yhc.java.common.util.PropertiesUtil;
 
 import java.lang.annotation.Annotation;
 import java.sql.Connection;
@@ -31,16 +32,22 @@ public class MysqlRefereceTest  {
     @Test
     public void insertMysql(){
        // connection.prepareStatement("insert into ")
-
-
+        PropertiesUtil util = new PropertiesUtil();
+        String port1 = util.getValue("config.properties", "mysql_port");
+        System.out.println(port1);
+        Integer mysql_port = Integer.valueOf(port1);
+        System.out.println(mysql_port);
     }
 
     @Test
     public void testRandomInt(){
-        for (int i = 0; i < 100; i++) {
-            int in = new Random().nextInt(6);
-
+        String a = "9822000073003000030000100001";
+        String newA = "";
+        char[] chars = a.toCharArray();
+        for (int i = chars.length - 1; i >= 0; i--) {
+            newA += chars[i];
         }
+        System.out.println(newA);
     }
 
     @Test

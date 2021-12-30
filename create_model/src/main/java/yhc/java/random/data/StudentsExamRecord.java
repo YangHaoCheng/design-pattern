@@ -18,7 +18,7 @@ public class StudentsExamRecord {
     private static CourseEnums courseEnums;
 
     public static void main(String[] args) {
-        List<Student> students = randomInstance(60);
+        List<Student> students = randomInstance(120);
         DataSource dataSource = DSFactory.get();
         Connection connection;
         String InsertSql = "INSERT INTO flink.studentexamrecord (`studentId`,`studentname`,`birthday`,`grade`,`classid`,`course1`,`course2`,`course3`,`course4`,`score`)  VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -51,7 +51,7 @@ public class StudentsExamRecord {
     public static List<Student> randomInstance(int perClassStudent){
         peopleEnums = new PeopleEnums();
         ArrayList<Student> students = new ArrayList<>();
-        for (int i = 20; i < perClassStudent; i++) {
+        for (int i = 1; i < perClassStudent; i++) {
             int classId = 1 + i % 3;
             Student student = new Student(i, peopleEnums.getName(), (java.sql.Date) peopleEnums.getBirthDay(), peopleEnums.getGrade(), classId);
             Map<String, Integer> courseScore = randomCourseScore(classId);

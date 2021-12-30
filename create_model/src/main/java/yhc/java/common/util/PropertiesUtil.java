@@ -13,7 +13,7 @@ public class PropertiesUtil {
         String result = reader.readString();
 
         if(null != result && !result.equals("")){
-            String[] lines = result.split("\n");
+            String[] lines = result.split("\r\n");
             String lineValue = getLineValue(lines, key);
             return lineValue;
         }
