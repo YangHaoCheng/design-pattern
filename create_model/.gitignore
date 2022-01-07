@@ -7,3 +7,6 @@
 *.iml
 out
 gen
+create_model.iml
+design-pattern.iml
+target/*
