@@ -12,12 +12,15 @@ import java.lang.annotation.Annotation;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.stream.IntStream;
 
 public class MysqlRefereceTest  {
     private Connection connection;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Before
     public void start() throws SQLException {
@@ -52,19 +55,26 @@ public class MysqlRefereceTest  {
 
     @Test
     public void testDate(){
-        String dateStr = "2017-03-01 22:33:23";
-        Date date = DateUtil.parse(dateStr);
+        HashMap<String,Object> map = new HashMap<>();
+        Date time = (Date) map.get("time");
+        System.out.println(null == time);
+
+//        String dateStr = "Wed Jan 05 09:17:52 CST 2022";
+//        String format = simpleDateFormat.format("1990-01-01 00:00:00");
+//        System.out.println(format);
+
+        //Date date = DateUtil.parse(dateStr);
 
         //结果：2017-03-03 22:33:23
-        Date newDate = DateUtil.offset(date, DateField.YEAR, 2);
-        //常用偏移，结果：2017-03-04 22:33:23
-        DateTime newDate2 = DateUtil.offsetDay(date, 3);
-        //常用偏移，结果：2017-03-01 19:33:23
-        DateTime newDate3 = DateUtil.offsetHour(date, -3);
-
-        java.sql.Date sqlDate = new java.sql.Date(newDate.getTime());
-
-        System.out.println(sqlDate);
+//        Date newDate = DateUtil.offset(date, DateField.YEAR, 2);
+//        //常用偏移，结果：2017-03-04 22:33:23
+//        DateTime newDate2 = DateUtil.offsetDay(date, 3);
+//        //常用偏移，结果：2017-03-01 19:33:23
+//        DateTime newDate3 = DateUtil.offsetHour(date, -3);
+//
+//        java.sql.Date sqlDate = new java.sql.Date(newDate.getTime());
+//
+//        System.out.println(sqlDate);
     }
 
     @After
