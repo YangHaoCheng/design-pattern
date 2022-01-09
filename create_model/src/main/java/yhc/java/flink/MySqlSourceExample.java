@@ -1,8 +1,10 @@
 package yhc.java.flink;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ververica.cdc.connectors.mysql.MySqlSource;
 import com.ververica.cdc.connectors.mysql.table.StartupOptions;
 import com.ververica.cdc.debezium.JsonDebeziumDeserializationSchema;
+import io.debezium.data.Json;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -16,9 +18,12 @@ import org.apache.flink.table.api.TableResult;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.types.Row;
 import org.apache.flink.util.CloseableIterator;
+import org.apache.kafka.connect.source.SourceRecord;
 import yhc.java.common.util.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Properties;
 
 public class MySqlSourceExample {
     private static final Logger LOGGER = LoggerFactory.getLogger(MySqlSourceExample.class);
@@ -32,7 +37,8 @@ public class MySqlSourceExample {
         String mysql_table = util.getValue("config.properties", "mysql_table");
         String mysql_user = util.getValue("config.properties", "mysql_user");
         String mysql_passwd = util.getValue("config.properties", "mysql_passwd");
-
+        Properties extralPro = new Properties();
+        extralPro.setProperty("AllowPublicKeyRetrieval", "true");
 //        MySqlSource<String> sqlSource = MySqlSource.<String>builder()
 //                .hostname("127.0.0.1")
 //                .port(3306)
@@ -87,35 +93,42 @@ public class MySqlSourceExample {
 //
 //        tabEnv.executeSql("desc test_flink_cdc").print();
 //        tabEnv.executeSql("select * from test_flink_cdc").print();
-        SourceFunction<String> sourceFunction =
-                MySqlSource.<String>builder()
+
+        SourceFunction<JSONObject> sourceFunction = MySqlSource.<JSONObject>builder()
                         .hostname("localhost")
                         .port(3306)
                         // monitor all tables under inventory database
                         .databaseList("flink")
-                        .tableList("test_cdc")
+                        .tableList("flink.studentexamrecord")
                         .username("root")
                         .serverId(1)
                         .password("000000")
-                        .startupOptions(StartupOptions.initial())
-                        .deserializer(new StringDebeziumDeserializationSchema())
+                        .debeziumProperties(extralPro)
+                        .startupOptions(StartupOptions.latest())
+                        .deserializer(new CdcDeserializationSchema())
                         .build();
 
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment().setParallelism(1);
-        DataStreamSource<String> source = env.addSource(sourceFunction);
-        StreamTableEnvironment tEnv =
-                StreamTableEnvironment.create(
-                        env,
-                        EnvironmentSettings.newInstance()
-                                .useBlinkPlanner()
-                                .inStreamingMode()
-                                .build());
-        tEnv.executeSql("CREATE TABLE test_flink_cdc ( id INT, name STRING,age  INT,adress  STRING,birthday DATE,createTime  TIMESTAMP(3),primary key(id)  NOT ENFORCED) WITH ( 'connector' = 'mysql-cdc', 'hostname' = 'localhost', 'debezium.snapshot.mode' = 'initial' , 'server-id' = '1' , 'port' = '3306', 'username' = 'root', 'password' = '000000', 'database-name' = 'flink', 'table-name' = 'test_cdc' )");
-        tEnv.createTemporaryView("full_types", source);
-        tEnv.executeSql("desc full_types").print();
-        TableResult tableResult = tEnv.executeSql("SELECT * FROM test_flink_cdc");
-        tableResult.print();
-        env.execute("Print MySQL Binlog");
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.getConfig().registerKryoType(SourceRecord.class);
+        DataStream<JSONObject> dataStream = env.addSource(sourceFunction, "mysql_source");
+        dataStream.print().setParallelism(1);
+
+        env.execute("test_cdc_mysql");
+
+//        DataStreamSource<String> source = env.addSource(sourceFunction);
+//        StreamTableEnvironment tEnv =
+//                StreamTableEnvironment.create(
+//                        env,
+//                        EnvironmentSettings.newInstance()
+//                                .useBlinkPlanner()
+//                                .inStreamingMode()
+//                                .build());
+//        tEnv.executeSql("CREATE TABLE test_flink_cdc ( id INT, name STRING,age  INT,adress  STRING,birthday DATE,createTime  TIMESTAMP(3),primary key(id)  NOT ENFORCED) WITH ( 'connector' = 'mysql-cdc', 'hostname' = 'localhost', 'debezium.snapshot.mode' = 'initial' , 'server-id' = '1' , 'port' = '3306', 'username' = 'root', 'password' = '000000', 'database-name' = 'flink', 'table-name' = 'test_cdc' )");
+//        tEnv.createTemporaryView("full_types", source);
+//        tEnv.executeSql("desc full_types").print();
+//        TableResult tableResult = tEnv.executeSql("SELECT * FROM test_flink_cdc");
+//        tableResult.print();
+//        env.execute("Print MySQL Binlog");
     }
 }
 
